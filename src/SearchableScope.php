@@ -4,9 +4,14 @@ namespace Laravel\Scout;
 
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Scope;
 use Laravel\Scout\Events\ModelsFlushed;
 use Laravel\Scout\Events\ModelsImported;
+
+if (interface_exists('\Illuminate\Database\Eloquent\Scope')) {
+    interface Scope extends \Illuminate\Database\Eloquent\Scope{}
+} else {
+    interface Scope extends \Illuminate\Database\Eloquent\ScopeInterface{}
+}
 
 class SearchableScope implements Scope
 {
@@ -18,6 +23,19 @@ class SearchableScope implements Scope
      * @return void
      */
     public function apply(EloquentBuilder $builder, Model $model)
+    {
+        //
+    }
+
+    /**
+     * Remove the scope from the given Eloquent query builder.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $builder
+     * @param  \Illuminate\Database\Eloquent\Model  $model
+     *
+     * @return void
+     */
+    public function remove(EloquentBuilder $builder, Model $model)
     {
         //
     }

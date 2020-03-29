@@ -132,7 +132,12 @@ class Builder
      */
     public function onlyTrashed()
     {
-        return tap($this->withTrashed(), function () {
+        $tap = function($value, $callback) {
+            $callback($value);
+            return $value;
+        };
+
+        return $tap($this->withTrashed(), function () {
             $this->wheres['__soft_deleted'] = 1;
         });
     }
