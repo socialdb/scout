@@ -120,13 +120,18 @@ trait Searchable
         $self = new static;
 
         $softDelete = static::usesSoftDelete() && config('scout.soft_delete', false);
-
-        $self->newQuery()
-            ->when($softDelete, function ($query) {
-                $query->withTrashed();
-            })
-            ->orderBy($self->getKeyName())
-            ->searchable();
+        if ($softDelete) {
+            $self->newQuery()
+                ->withTrashed()
+                ->orderBy($self->getKeyName())
+                ->get()
+                ->searchable();
+        } else {
+            $self->newQuery()
+                ->orderBy($self->getKeyName())
+                ->get()
+                ->searchable();
+        }
     }
 
     /**
