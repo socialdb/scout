@@ -4,9 +4,10 @@ namespace Laravel\Scout\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Queue\SerializesModels;
 
-class MakeSearchable implements ShouldQueue
+class MakeSearchable implements ShouldQueue, SelfHandling
 {
     use Queueable, SerializesModels;
 

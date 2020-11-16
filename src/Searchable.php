@@ -64,8 +64,7 @@ trait Searchable
         }
 
         dispatch((new MakeSearchable($models))
-                ->onQueue($models->first()->syncWithSearchUsingQueue())
-                ->onConnection($models->first()->syncWithSearchUsing()));
+                ->onQueue($models->first()->syncWithSearchUsingQueue()));
     }
 
     /**
