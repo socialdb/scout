@@ -63,8 +63,10 @@ trait Searchable
             return $models->first()->searchableUsing()->update($models);
         }
 
-        dispatch((new MakeSearchable($models))
-                ->onQueue($models->first()->syncWithSearchUsingQueue()));
+        $job = (new MakeSearchable($models))
+            ->onQueue($models->first()->syncWithSearchUsingQueue());
+        $connection = Queue::connection($models->first->syncWithSearchUsing());
+        $connection->pushOn($models->first()->syncWithSearchUsingQueue(), $job);
     }
 
     /**
